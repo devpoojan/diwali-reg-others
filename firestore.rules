@@ -1,0 +1,188 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for authentication and RBAC
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDocExists() {
+      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isActiveUser() {
+      return userDocExists() && getUserData().status == 'ACTIVE';
+    }
+
+    function getUserRole() {
+      return getUserData().role;
+    }
+
+    function getUserAccess() {
+      return getUserData().categoryAccess;
+    }
+
+    function isSuperAdmin() {
+      return (isSignedIn() && request.auth.token.email == 'superadmin@anandotsav.baps.org') ||
+             (isActiveUser() && getUserRole() == 'SUPER_ADMIN');
+    }
+
+    function isAdminOrSuperAdmin() {
+      return (isSignedIn() && (
+        request.auth.token.email == 'admin@anandotsav.baps.org' ||
+        request.auth.token.email == 'superadmin@anandotsav.baps.org'
+      )) || isSuperAdmin() || (isActiveUser() && getUserRole() == 'ADMIN');
+    }
+
+    function isCoordinatorOrHigher() {
+      return isActiveUser() && (
+        getUserRole() == 'COORDINATOR' || 
+        getUserRole() == 'ADMIN' || 
+        getUserRole() == 'SUPER_ADMIN'
+      );
+    }
+
+    function isStaff() {
+      return isActiveUser() && (
+        getUserRole() == 'VOLUNTEER' ||
+        getUserRole() == 'COORDINATOR' ||
+        getUserRole() == 'ADMIN' ||
+        getUserRole() == 'SUPER_ADMIN'
+      );
+    }
+
+    function hasCategoryAccess(cat) {
+      return isStaff() && (
+        getUserAccess() == 'BOTH' ||
+        (cat != null && getUserAccess() == 'BAL_ONLY' && cat == 'BAL') ||
+        (cat != null && getUserAccess() == 'BLK_ONLY' && cat == 'BLK')
+      );
+    }
+
+    function registrationDetailsUnchanged() {
+      return request.resource.data.registrationCode == resource.data.registrationCode &&
+             request.resource.data.category == resource.data.category &&
+             request.resource.data.vistar == resource.data.vistar &&
+             request.resource.data.firstName == resource.data.firstName &&
+             request.resource.data.fatherName == resource.data.fatherName &&
+             request.resource.data.surname == resource.data.surname &&
+             request.resource.data.fullName == resource.data.fullName &&
+             request.resource.data.mobileNumber == resource.data.mobileNumber &&
+             request.resource.data.createdAt == resource.data.createdAt;
+    }
+
+    // Event Settings (Registration on/off, cutoff)
+    match /eventSettings/{settingId} {
+      allow read: if true;
+      allow write: if isAdminOrSuperAdmin();
+    }
+
+    // Statistics (Public & Staff aggregate counters)
+    match /statistics/{cat} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Internal Sequence Counters
+    match /registrationCounters/{cat} {
+      allow read, write: if true;
+    }
+
+    // Idempotency requests
+    match /registrationRequests/{requestId} {
+      allow read, write: if true;
+    }
+
+    // Staff user accounts
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if isAdminOrSuperAdmin();
+      allow delete: if isSuperAdmin();
+    }
+
+    // Staff passwords configured by Admin
+    match /staff_passwords/{accountId} {
+      allow read, write: if true;
+    }
+
+    // Chandlodiya Center collection
+    match /chandlodiya/{docId} {
+      // Counters for atomic sequential code generation
+      allow read, write: if docId == 'counter_BAL' || docId == 'counter_BLK';
+
+      // Center configuration
+      allow read: if docId == '_center_config';
+      allow write: if docId == '_center_config' && isAdminOrSuperAdmin();
+
+      // Child Registrations
+      allow create: if docId != '_center_config' &&
+                    docId != 'counter_BAL' &&
+                    docId != 'counter_BLK' &&
+                    request.resource.data.isDeleted == false &&
+                    request.resource.data.category in ['BAL', 'BLK'] &&
+                    (!isSignedIn() || hasCategoryAccess(request.resource.data.category));
+
+      // Read / Search / List: Open for client statistics, directory, and volunteer search
+      allow read: if true;
+
+      // Update: Card Issuance, Reversal, Accompanying count, or Soft-Delete/Restore
+      allow update: if docId != '_center_config' &&
+                    docId != 'counter_BAL' &&
+                    docId != 'counter_BLK' &&
+                    registrationDetailsUnchanged() &&
+                    (request.resource.data.isDeleted == resource.data.isDeleted || !request.resource.data.isDeleted || isAdminOrSuperAdmin());
+
+      // Administrative hard delete restricted to Admin or Super Admin for database maintenance
+      allow delete: if isAdminOrSuperAdmin();
+    }
+
+    // Vadaj Center collection
+    match /vadaj/{docId} {
+      // Counters for atomic sequential code generation
+      allow read, write: if docId == 'counter_BAL' || docId == 'counter_BLK';
+
+      // Center configuration
+      allow read: if docId == '_center_config';
+      allow write: if docId == '_center_config' && isAdminOrSuperAdmin();
+
+      // Child Registrations
+      allow create: if docId != '_center_config' &&
+                    docId != 'counter_BAL' &&
+                    docId != 'counter_BLK' &&
+                    request.resource.data.isDeleted == false &&
+                    request.resource.data.category in ['BAL', 'BLK'];
+
+      // Read / Search / List: Open for client statistics, directory, and volunteer search
+      allow read: if true;
+
+      // Update: Card Issuance, Reversal, Accompanying count, or Soft-Delete/Restore
+      allow update: if docId != '_center_config' &&
+                    docId != 'counter_BAL' &&
+                    docId != 'counter_BLK' &&
+                    registrationDetailsUnchanged() &&
+                    (request.resource.data.isDeleted == resource.data.isDeleted || !request.resource.data.isDeleted || isAdminOrSuperAdmin());
+
+      // Administrative hard delete restricted to Admin or Super Admin for database maintenance
+      allow delete: if isAdminOrSuperAdmin();
+    }
+
+    // Legacy sync registrations collection
+    match /registrations/{registrationId} {
+      allow create: if request.resource.data.isDeleted == false &&
+                    request.resource.data.category in ['BAL', 'BLK'];
+
+      allow read: if true;
+
+      allow update: if registrationDetailsUnchanged() &&
+                    (request.resource.data.isDeleted == resource.data.isDeleted || !request.resource.data.isDeleted || isAdminOrSuperAdmin());
+
+      allow delete: if isAdminOrSuperAdmin();
+    }
+  }
+}

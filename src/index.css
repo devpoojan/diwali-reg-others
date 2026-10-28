@@ -1,0 +1,359 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Baloo Bhai 2', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'Baloo Bhai 2', 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+
+  *, ::before, ::after {
+    font-family: 'Baloo Bhai 2', system-ui, -apple-system, sans-serif;
+  }
+
+  html, body {
+    font-family: 'Baloo Bhai 2', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, a, input, select, textarea {
+    font-family: 'Baloo Bhai 2', inherit, system-ui, sans-serif;
+    touch-action: manipulation;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display, .font-gujarati {
+    font-family: 'Baloo Bhai 2', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Claymorphic Design System (Strictly for Public Portal) */
+@layer components {
+  .clay-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+    border-radius: 1.25rem;
+    box-shadow: 
+      4px 6px 16px rgba(163, 177, 198, 0.28),
+      -4px -4px 12px #ffffff,
+      inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.9),
+      inset -1.5px -1.5px 3px rgba(163, 177, 198, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    transition: all 0.25s ease-in-out;
+  }
+
+  @media (min-width: 640px) {
+    .clay-card {
+      border-radius: 1.5rem;
+      box-shadow: 
+        8px 8px 20px rgba(163, 177, 198, 0.35),
+        -8px -8px 20px #ffffff,
+        inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+        inset -2px -2px 4px rgba(163, 177, 198, 0.15);
+    }
+  }
+
+  .clay-card-bal {
+    background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+    border-radius: 1.25rem;
+    box-shadow: 
+      4px 6px 16px rgba(37, 99, 235, 0.15),
+      -4px -4px 12px #ffffff,
+      inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.95),
+      inset -1.5px -1.5px 3px rgba(37, 99, 235, 0.08);
+    border: 1.5px solid rgba(191, 219, 254, 0.85);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 640px) {
+    .clay-card-bal {
+      border-radius: 1.5rem;
+      box-shadow: 
+        8px 8px 24px rgba(37, 99, 235, 0.18),
+        -8px -8px 20px #ffffff,
+        inset 2px 2px 5px rgba(255, 255, 255, 0.9),
+        inset -2px -2px 5px rgba(37, 99, 235, 0.1);
+    }
+  }
+
+  .clay-card-bal:active {
+    transform: scale(0.97);
+  }
+
+  .clay-card-blk {
+    background: linear-gradient(135deg, #fff1f2 0%, #ffffff 100%);
+    border-radius: 1.25rem;
+    box-shadow: 
+      4px 6px 16px rgba(225, 29, 72, 0.15),
+      -4px -4px 12px #ffffff,
+      inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.95),
+      inset -1.5px -1.5px 3px rgba(225, 29, 72, 0.08);
+    border: 1.5px solid rgba(254, 205, 211, 0.85);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 640px) {
+    .clay-card-blk {
+      border-radius: 1.5rem;
+      box-shadow: 
+        8px 8px 24px rgba(225, 29, 72, 0.18),
+        -8px -8px 20px #ffffff,
+        inset 2px 2px 5px rgba(255, 255, 255, 0.9),
+        inset -2px -2px 5px rgba(225, 29, 72, 0.1);
+    }
+  }
+
+  .clay-card-blk:active {
+    transform: scale(0.97);
+  }
+
+  .clay-btn {
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clay-btn-bal {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: #ffffff;
+    box-shadow: 
+      5px 5px 12px rgba(37, 99, 235, 0.4),
+      -3px -3px 8px rgba(255, 255, 255, 0.9),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .clay-btn-bal:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+      6px 8px 16px rgba(37, 99, 235, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  .clay-btn-bal:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: inset 3px 3px 6px rgba(30, 58, 138, 0.6);
+  }
+
+  .clay-btn-blk {
+    background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+    color: #ffffff;
+    box-shadow: 
+      5px 5px 12px rgba(225, 29, 72, 0.4),
+      -3px -3px 8px rgba(255, 255, 255, 0.9),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .clay-btn-blk:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+      6px 8px 16px rgba(225, 29, 72, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  .clay-btn-blk:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: inset 3px 3px 6px rgba(136, 19, 55, 0.6);
+  }
+
+  .clay-btn-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff;
+    box-shadow: 
+      5px 5px 12px rgba(217, 119, 6, 0.4),
+      -3px -3px 8px rgba(255, 255, 255, 0.9),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .clay-btn-gold:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+      6px 8px 16px rgba(217, 119, 6, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  .clay-btn-gold:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: inset 3px 3px 6px rgba(146, 64, 14, 0.6);
+  }
+
+  .clay-input {
+    background: #ffffff;
+    border-radius: 0.875rem;
+    box-shadow: 
+      inset 1.5px 1.5px 3px rgba(163, 177, 198, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+    border: 1.5px solid #d1d5db;
+    transition: all 0.2s ease-in-out;
+    font-size: 16px; /* Prevents iOS auto-zoom on mobile focus */
+    min-height: 48px; /* Accessible 48px touch target */
+  }
+
+  @media (min-width: 640px) {
+    .clay-input {
+      border-radius: 1rem;
+      font-size: 0.9375rem;
+      min-height: 46px;
+    }
+  }
+
+  .clay-input:focus {
+    outline: none;
+    border-color: #9333ea;
+    background: #ffffff;
+    box-shadow: 
+      0 0 0 3px rgba(147, 51, 234, 0.18),
+      0 4px 12px rgba(147, 51, 234, 0.1);
+  }
+
+  /* Anandotsav Wonderland 3D Theme */
+  .font-gujarati {
+    font-family: 'Baloo Bhai 2', system-ui, -apple-system, sans-serif;
+  }
+
+  .ticket-card {
+    background: radial-gradient(circle at top left, #ffffff 0%, #faf5ff 100%);
+    border: 2px dashed #d8b4fe;
+    border-radius: 1.25rem;
+    position: relative;
+    box-shadow: 0 8px 24px -6px rgba(147, 51, 234, 0.15);
+  }
+
+  .clay-wonderland-card {
+    background: linear-gradient(145deg, #ffffff 0%, #fdf4ff 50%, #eff6ff 100%);
+    border-radius: 1.25rem;
+    box-shadow: 
+      0 12px 28px -10px rgba(124, 58, 237, 0.2),
+      4px 6px 16px rgba(168, 85, 247, 0.12),
+      -4px -4px 16px #ffffff,
+      inset 1.5px 1.5px 4px rgba(255, 255, 255, 0.95),
+      inset -1.5px -1.5px 4px rgba(124, 58, 237, 0.06);
+    border: 1.5px solid rgba(233, 213, 255, 0.7);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (min-width: 640px) {
+    .clay-wonderland-card {
+      border-radius: 2rem;
+      border-width: 2px;
+      box-shadow: 
+        0 20px 40px -15px rgba(124, 58, 237, 0.25),
+        8px 8px 24px rgba(168, 85, 247, 0.15),
+        -8px -8px 24px #ffffff,
+        inset 2px 2px 6px rgba(255, 255, 255, 0.95),
+        inset -2px -2px 6px rgba(124, 58, 237, 0.08);
+    }
+  }
+
+  .clay-wonderland-arch {
+    background: linear-gradient(180deg, #6d28d9 0%, #7c3aed 45%, #9333ea 75%, #a855f7 100%);
+    border-radius: 1.75rem 1.75rem 1.25rem 1.25rem;
+    box-shadow: 
+      0 15px 35px -10px rgba(109, 40, 217, 0.4),
+      inset 0 3px 8px rgba(255, 255, 255, 0.4),
+      inset 0 -3px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(243, 232, 255, 0.6);
+  }
+
+  @media (min-width: 640px) {
+    .clay-wonderland-arch {
+      border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
+      border-width: 3px;
+      box-shadow: 
+        0 25px 50px -12px rgba(109, 40, 217, 0.45),
+        inset 0 4px 12px rgba(255, 255, 255, 0.4),
+        inset 0 -4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .bulb-glow {
+    box-shadow: 0 0 10px #fde047, 0 0 20px #eab308, inset 0 0 4px #ffffff;
+    animation: bulbPulse 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes bulbPulse {
+    0% {
+      opacity: 0.85;
+      transform: scale(0.96);
+      box-shadow: 0 0 8px #fde047, 0 0 16px #eab308;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.04);
+      box-shadow: 0 0 14px #fef08a, 0 0 26px #facc15, 0 0 35px #f59e0b;
+    }
+  }
+
+  .clay-btn-purple {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: #ffffff;
+    box-shadow: 
+      6px 8px 16px rgba(109, 40, 217, 0.4),
+      -4px -4px 10px rgba(255, 255, 255, 0.9),
+      inset 1px 1px 3px rgba(255, 255, 255, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .clay-btn-purple:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+      8px 12px 22px rgba(109, 40, 217, 0.5),
+      -4px -4px 10px rgba(255, 255, 255, 0.9);
+  }
+
+  .clay-btn-purple:active:not(:disabled) {
+    transform: translateY(1px) scale(0.99);
+    box-shadow: inset 3px 3px 6px rgba(76, 29, 149, 0.7);
+  }
+
+  .clay-pill-tag {
+    background: linear-gradient(135deg, rgba(243, 232, 255, 0.85) 0%, rgba(253, 244, 255, 0.95) 100%);
+    backdrop-filter: blur(8px);
+    border-radius: 9999px;
+    box-shadow: 
+      3px 4px 10px rgba(147, 51, 234, 0.15),
+      -3px -3px 8px #ffffff,
+      inset 1px 1px 2px rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(216, 180, 254, 0.7);
+  }
+
+  /* Mobile Phone Dedicated Polish Utilities */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+  }
+  .pt-safe {
+    padding-top: max(0.5rem, env(safe-area-inset-top, 0.5rem));
+  }
+  .mb-safe {
+    margin-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+  }
+
+  /* Floating Bottom Action Bar for Mobile Phones */
+  .mobile-float-bar {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.94);
+    border: 1.5px solid rgba(216, 180, 254, 0.85);
+    box-shadow: 0 12px 32px -4px rgba(109, 40, 217, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  }
+
+  /* Prevent text selection and add native tactile tap-bounce on mobile */
+  .tap-bounce {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tap-bounce:active {
+    transform: scale(0.96);
+  }
+}

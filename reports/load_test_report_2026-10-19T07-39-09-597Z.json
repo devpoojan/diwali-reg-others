@@ -1,0 +1,60 @@
+{
+  "telemetry": {
+    "startTime": "2026-10-19T07:38:46.994Z",
+    "endTime": "2026-10-19T07:39:09.597Z",
+    "totalDurationSec": "22.60",
+    "totalRequests": 22,
+    "successfulRequests": 22,
+    "failedRequests": 0,
+    "rps": "0.97",
+    "operations": {
+      "POST_REGISTRATION": {
+        "count": 10,
+        "latencies": [
+          2252,
+          3938,
+          5632,
+          11692,
+          13924,
+          14959,
+          18253,
+          19917,
+          20487,
+          22218
+        ]
+      },
+      "GET_VOLUNTEER_SEARCH": {
+        "count": 6,
+        "latencies": [
+          400,
+          413,
+          331,
+          325,
+          356,
+          565
+        ]
+      },
+      "POST_CARD_ISSUE": {
+        "count": 6,
+        "latencies": [
+          1714,
+          366,
+          408,
+          382,
+          785,
+          383
+        ]
+      }
+    },
+    "overallMetrics": {
+      "min": 325,
+      "avg": 6350,
+      "p50": 1714,
+      "p90": 19917,
+      "p95": 20487,
+      "p99": 22218,
+      "max": 22218
+    },
+    "errors": []
+  }
+}

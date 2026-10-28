@@ -1,0 +1,72 @@
+{
+  "telemetry": {
+    "startTime": "2026-10-19T07:34:56.642Z",
+    "endTime": "2026-10-19T07:35:08.367Z",
+    "totalDurationSec": "11.72",
+    "totalRequests": 11,
+    "successfulRequests": 5,
+    "failedRequests": 6,
+    "rps": "0.94",
+    "operations": {
+      "POST_REGISTRATION": {
+        "count": 5,
+        "latencies": [
+          2367,
+          3636,
+          5352,
+          9472,
+          9982
+        ]
+      },
+      "GET_VOLUNTEER_SEARCH": {
+        "count": 0,
+        "latencies": []
+      },
+      "POST_CARD_ISSUE": {
+        "count": 0,
+        "latencies": []
+      }
+    },
+    "overallMetrics": {
+      "min": 2367,
+      "avg": 6162,
+      "p50": 5352,
+      "p90": 9982,
+      "p95": 9982,
+      "p99": 9982,
+      "max": 9982
+    },
+    "errors": [
+      {
+        "opType": "POST_CARD_ISSUE",
+        "ms": 2409,
+        "error": "7 PERMISSION_DENIED: Missing or insufficient permissions."
+      },
+      {
+        "opType": "GET_VOLUNTEER_SEARCH",
+        "ms": 4128,
+        "error": "Missing or insufficient permissions."
+      },
+      {
+        "opType": "POST_CARD_ISSUE",
+        "ms": 3329,
+        "error": "7 PERMISSION_DENIED: Missing or insufficient permissions."
+      },
+      {
+        "opType": "GET_VOLUNTEER_SEARCH",
+        "ms": 1623,
+        "error": "Missing or insufficient permissions."
+      },
+      {
+        "opType": "GET_VOLUNTEER_SEARCH",
+        "ms": 1113,
+        "error": "Missing or insufficient permissions."
+      },
+      {
+        "opType": "POST_CARD_ISSUE",
+        "ms": 629,
+        "error": "7 PERMISSION_DENIED: Missing or insufficient permissions."
+      }
+    ]
+  }
+}
