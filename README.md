@@ -1,4 +1,4 @@
-# 🌸 BAPS Anandotsav & Bal Utsav — Turnkey Registration & Event System
+# 🌸 BAPS Children Festival & Anandotsav — Event Management System
 
 > ### 📢 કોઈપણ નવા સેન્ટર / મંડળ માટે સંપૂર્ણ ગુજરાતી સેટઅપ ગાઈડ (SETUP GUIDE)
 > 
@@ -17,96 +17,79 @@
 [![Vitest](https://img.shields.io/badge/Tested%20with-Vitest-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-A high-performance, cloud-native web application built for **BAPS Swaminarayan Sanstha** to manage large-scale public registrations, volunteer ground operations, physical game card issuance, attendance tracking, and administrative analytics.
+A high-performance, cloud-native web application built for **BAPS Swaminarayan Sanstha** to manage large-scale public registrations, volunteer ground operations, physical game card issuance, attendance tracking, and administrative analytics for Children and Youth Festivals.
 
 ---
 
 ## 📑 Table of Contents
 
-- [🚀 Turnkey Setup Guide (ગુજરાતી માર્ગદર્શિકા)](#-નવા-સેન્ટર--મંડળ-માટે-સંપૂર્ણ-ગુજરાતી-સેટઅપ-ગાઈડ-setup-guide)
+- [🚀 Turnkey Setup Guide (ગુજરાતી માર્ગદર્શિકા)](#-કોઈપણ-નવા-સેન્ટર--મંડળ-માટે-સંપૂર્ણ-ગુજરાતી-સેટઅપ-ગાઈડ-setup-guide)
 - [Overview](#-overview)
 - [Key Features](#-key-features)
   - [1. Festive Public Portal](#1-festive-public-portal)
   - [2. High-Speed Volunteer Station](#2-high-speed-volunteer-station)
-  - [3. Card Printing & Batch Management](#3-card-printing--batch-management)
+  - [3. Card Printing & Pre-Printed Box Management](#3-card-printing--pre-printed-box-management)
   - [4. Unified Admin Command Center](#4-unified-admin-command-center)
   - [5. Role-Based Access Control (RBAC)](#5-role-based-access-control-rbac)
-- [Non-Negotiable Business Rules](#-non-negotiable-business-rules)
-- [System Architecture](#-system-architecture)
+- [Core Business Rules](#-core-business-rules)
 - [Technology Stack](#-technology-stack)
 - [Repository Structure](#-repository-structure)
 - [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Configuration](#environment-configuration)
-  - [Development Server](#development-server)
-  - [Testing](#testing)
-  - [Production Build](#production-build)
 - [Firebase Deployment](#-firebase-deployment)
-- [Event Schedule](#-event-schedule)
 - [License & Credits](#-license--credits)
 
 ---
 
 ## 🌟 Overview
 
-**BAPS Anandotsav 2026** is designed to handle thousands of registrations and coordinate 50+ concurrent volunteers across two primary centers:
-- **Chandlodiya Sanskardham** (Saturday, 31/10/2026)
-- **Vadaj Sanskardham** (Sunday, 01/11/2026)
+This system is engineered to handle thousands of family registrations and coordinate 50+ concurrent ground volunteers across multiple festival centers and venues.
 
-The system supports two distinct departments:
+The system supports two departments:
 - **BAL** (Bal Vibhag — Boys)
 - **BLK** (Balika Vibhag — Girls)
+
+All centers, festival dates, timings, venues, code prefixes, and logos are **100% dynamically configurable** through the built-in Setup Wizard (`/setup`) or Admin Command Center.
 
 ---
 
 ## ✨ Key Features
 
 ### 1. Festive Public Portal
-- **Claymorphic UI Aesthetic**: Soft 3D card elevation, vibrant pastel gradients, celebratory confetti effects, and micro-animations.
-- **Dedicated Center Landing Portals**:
-  - `/chandlodiya` (alias `/c`): Complete center schedule, Google Maps link, and direct registration.
-  - `/vadaj` (alias `/v`): Center schedule, map directions, and dedicated registration flow.
-- **Minimal Root Gateway (`/`)**: Clean, distraction-free landing screen showing official Anandotsav logo and immediate center selection.
-- **Sequential Registration Engine**:
-  - `Area Selection` ➜ `Department Selection` ➜ `Child Details` ➜ `Mandatory Review & Confirm`.
-  - **Structured Address Fields**: House/Flat number and Society/Apartment name inputs with center-specific area chips:
-    - **Vadaj**: Vadaj, Nirnayanagar, Other.
-    - **Chandlodiya**: Chandlodiya, Ognaj, Tragad, Other.
-  - **Strict English Validation**: Real-time badge warnings and prevention of non-English script entry (`A–Z, 0–9` characters only).
-- **Instant Child ID Celebration Screen (`/success`)**:
-  - Displays internal registration code (`BAL-1001`, `BLK-0001`, etc.) for parents to screenshot.
-  - **1-Click WhatsApp Invitation Generator**: Pre-formatted Gujarati invitation text customized per center with emojis, event timings, map link, and registration URL.
+- **Claymorphic UI Aesthetic**: Soft 3D cards, vibrant pastel gradients, celebratory confetti effects, and micro-animations designed for festive events.
+- **Dynamic Center Selector**: Automatically displays all configured celebration centers with dates, timings, and venues.
+- **Fast 3-Step Registration**:
+  - `Center Selection` ➜ `Department Selection` ➜ `Child & Parent Details`.
+- **Celebration Success Screen**:
+  - Displays internal registration code (e.g. `C-1`, `V-1`, `B-1`) for parents to screenshot.
+  - **1-Click WhatsApp Invitation Generator**: Pre-formatted WhatsApp invitation text customized per center with emojis, timings, and map directions.
 
 ### 2. High-Speed Volunteer Station
-- **Mobile-First Touch Ergonomics**: Specifically engineered for smartphones and tablets held by ground volunteers at event entrance gates.
-- **Instant Search-as-You-Type**: Debounced search across child name, mobile number, and unique registration ID with partition routing for sub-50ms query response.
-- **Atomic Physical Card Issuance**:
-  - Single-tap card issue action.
-  - Prompt for accompanying person count (parents/guardians).
-  - Atomic Firestore commit with automatic reversal capability (`ISSUED` ➜ `NOT_ISSUED`).
-- **Quick On-the-Spot Registration**: Form optimized for quick walk-in registrations on event day.
+- **Mobile-First Touch Ergonomics**: Specifically engineered for smartphones and tablets held by ground volunteers at entrance gates.
+- **Zero-Modal Direct Card Issuance**: 
+  - Instant debounced search across child name, mobile number, or registration code.
+  - Inline companion selector chips (`0 (Child Only)`, `+1`, `+2`, `+3`, `+4`).
+  - 1-tap `⚡ Issue Card` button directly on the search card with sub-second response.
+- **Quick On-the-Spot Registration**: Streamlined 30-second form for walk-in families on festival day.
 
-### 3. Card Printing & Batch Management
-- **Pre-Event Physical Card Preparation (`/admin/printing`)**:
-  - Track high-volume card distribution cutoff limits (`chandlodiyaBalCutoff`, `vadajBlkCutoff`, etc.).
-  - Instant indicator of which cards are printed vs. unprinted.
-  - Print-ready card sheets with QR/Barcode, child name, mobile, and registration code.
+### 3. Card Printing & Pre-Printed Box Management
+- **Pre-Event Card Preparation (`/admin/printing`)**:
+  - Track card distribution cutoff limits per center.
+  - Clear guidance for ground volunteers:
+    - 🖨️ **Box Cards**: Find pre-printed card in physical numbered box.
+    - ✍️ **Blank Cards**: Write registration code and name on manual blank card.
 
 ### 4. Unified Admin Command Center
-- **Data-Driven Dashboard (`/admin`)**:
-  - Manual on-demand refresh with timestamp tracking.
-  - Real-time KPI summaries: Total Registrations, Active Cards Issued, Accompanying Persons, Total Ground Attendance.
-  - Live Prasad & Refreshment projections calculated atomically from attendance tallies.
-  - Center & Department breakdowns with comparative progress bars.
-- **Registrations Manager**:
-  - Filter by Center, Department, Status (`ISSUED`, `NOT_ISSUED`), and Soft-deleted records.
-  - Multi-child bulk selection and bulk card issuance.
-  - Sibling & Family Helpdesk lookup.
-  - 1-Click Excel (.xlsx) export with complete details (Address, Society, Area, Mobile, etc.).
-- **Global Event Settings & Live Broadcast**:
-  - Toggle Public Online Registration and On-the-Spot Registration independently.
-  - Push emergency or celebratory banner broadcasts across all public pages in real time.
+- **Real-Time KPI Dashboard (`/admin`)**:
+  - On-demand refresh with timestamp tracking.
+  - Real-time summaries: Total Registrations, Active Cards Issued (Children Present), Accompanying Persons Present, and Total Ground Attendance.
+  - Live Prasad & refreshment projections calculated atomically from attendance tallies.
+  - Center and department breakdowns with comparative progress bars.
+- **Registrations Manager (`/admin/registrations`)**:
+  - Filter by Center, Department, Card Status (`ISSUED`, `NOT_ISSUED`), and soft-deleted records.
+  - Sibling and family helpdesk lookup.
+  - **Universal Excel Export**: Single or multi-area exports with option to create dedicated worksheet tabs per area (`1 Tab Per Area`) or department splits.
+- **Area-Wise Distribution Report (`/admin/area-report`)**:
+  - Locality share breakdown, distribution charts, and direct contact actions.
 
 ### 5. Role-Based Access Control (RBAC)
 Server-enforced authorization rules protecting child data:
@@ -120,68 +103,33 @@ Server-enforced authorization rules protecting child data:
 
 ---
 
-## ⚖️ Non-Negotiable Business Rules
+## ⚖️ Core Business Rules
 
 1. **Duplicate Registrations Allowed**:
-   - The system intentionally allows multiple registrations with the same mobile number or identical child names (e.g., siblings or parents registering again).
+   - The system allows multiple registrations with the same mobile number or identical child names (e.g. siblings or repeated registrations).
    - No uniqueness constraints block intentional repeated submissions.
-2. **Atomic Unique Registration Codes**:
-   - Internal sequential codes generated transactionally:
-     - **Vadaj**: `BAL-0001` upwards, `BLK-0001` upwards.
-     - **Chandlodiya**: `BAL-1001` upwards, `BLK-1001` upwards.
-   - Code sequences never overlap and are never reused.
+2. **Unique Registration Codes**:
+   - Sequential center-prefixed non-padded numbers (e.g. `C-1`, `V-1`, `B-1` upwards).
+   - Sequences never overlap and are never reused.
 3. **Registration Immutability**:
-   - Once submitted through the mandatory Review & Confirm step, the child's identity details are strictly read-only.
+   - Once submitted, personal details are read-only to preserve registration integrity.
 4. **Attendance Calculation**:
    - $\text{Total Attendance} = \text{Active Cards Issued (Children)} + \sum(\text{Accompanying Persons})$.
 5. **Soft Deletion Only**:
-   - Deleted registrations are never purged from Firestore; they are soft-deleted, excluded from active analytics, and restorable by Coordinators and Admins.
-
----
-
-## 🏛️ System Architecture
-
-```
-                                  CLIENT LAYER
-    ┌─────────────────────────┬─────────────────────────┬─────────────────────────┐
-    │      Public Portal      │    Volunteer Station    │    Admin Command Center │
-    │   (Claymorphism UI)     │   (Mobile-First Fast)   │   (Data-Dense Clean UI) │
-    └─────────────────────────┴─────────────────────────┴─────────────────────────┘
-                                           │
-                                 Vite + React SPA (TS)
-                                           │ HTTPS / WSS
-    ┌──────────────────────────────────────┴──────────────────────────────────────┐
-    │                               SERVICES LAYER                                │
-    │  • Firebase Authentication (Custom Claims: role, departmentAccess)          │
-    │  • Registration Service (Atomic transactions & collection partitioning)     │
-    │  • Card Printing Service (Cutoff tracking & batching)                       │
-    │  • Event Settings Service (Real-time onSnapshot synchronization)            │
-    └──────────────────────────────────────┬──────────────────────────────────────┘
-                                           │
-    ┌──────────────────────────────────────┴──────────────────────────────────────┐
-    │                                 DATA LAYER                                  │
-    │  • Google Cloud Firestore:                                                  │
-    │    ├── /chandlodiya/{id}       (Chandlodiya Partition)                      │
-    │    ├── /vadaj/{id}             (Vadaj Partition)                            │
-    │    ├── /users/{uid}            (Staff & RBAC Accounts)                      │
-    │    ├── /eventSettings/current  (Global Configuration & Broadcast)           │
-    │    └── /printSettings/current  (Card Printing Cutoffs)                      │
-    │  • Firebase Hosting (CDN Global Edge Distribution)                          │
-    └─────────────────────────────────────────────────────────────────────────────┘
-```
+   - Deleted registrations are never purged; they remain stored, excluded from active statistics, and restorable by Coordinators and Admins.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Frontend Core:** React 19 / 18, TypeScript (Strict Mode)
+- **Frontend Core:** React 19, TypeScript (Strict Mode)
 - **Build Tool:** Vite 8.3
 - **CSS & Styling:** Tailwind CSS 3.4, PostCSS, Autoprefixer
 - **UI Components & Icons:** Lucide React, Canvas Confetti
 - **Animation:** Motion (Framer Motion)
-- **Database & Auth:** Firebase Web SDK 12, Google Cloud Firestore, Firebase Authentication
+- **Database & Auth:** Google Cloud Firestore (Mumbai `asia-south1`), Firebase Authentication
 - **Excel Export:** SheetJS (`xlsx`)
-- **Testing:** Vitest, Testing Library
+- **Testing:** Vitest (65 Unit & Service Tests passing)
 
 ---
 
@@ -190,38 +138,34 @@ Server-enforced authorization rules protecting child data:
 ```
 diwali/
 ├── docs/                      # Architectural & Product Specifications
-│   ├── ARCHITECTURE.md        # Comprehensive Architecture Specification
+│   ├── ARCHITECTURE.md        # Architecture Specification
 │   ├── DATABASE_SCHEMA.md     # Firestore Collections & Index Architecture
 │   ├── PRD.md                 # Product Requirements Document
 │   ├── RBAC.md                # Role-Based Access Control Spec
-│   ├── DECISIONS.md           # Architecture Decision Records (ADRs)
-│   ├── LOAD_TESTING_GUIDE.md  # High-Concurrency Load Testing Manual
 │   └── CHANGELOG.md           # Detailed Version & Feature History
-├── public/                    # Static Assets (Logos, Icons, Posters)
-├── scripts/                   # Database Seeding, Benchmarks & Load Tests
+├── public/                    # Static Assets (Logos, Icons)
+├── scripts/                   # Database Seeding & Verification Scripts
 ├── src/
 │   ├── components/            # Reusable Modular UI Components
+│   │   ├── admin/             # Excel Export Modal & Admin Tools
 │   │   ├── auth/              # Protected Route & Permission Guards
 │   │   ├── public/            # Public Navbar & Shared Layouts
 │   │   └── staff/             # Admin & Volunteer Navigation Layouts
 │   ├── context/               # Global Context Providers (Auth, Language)
 │   ├── lib/                   # Firebase Initialization & Client Config
 │   ├── pages/                 # Application Route Pages
-│   │   ├── admin/             # Dashboard, Registrations, Printing, Staff
+│   │   ├── admin/             # Dashboard, Registrations, Printing, Area Report
 │   │   ├── auth/              # Staff & Volunteer Login Screen
-│   │   ├── public/            # Home, Center Landing, Register, Success
+│   │   ├── public/            # Home, Register, Success
+│   │   ├── setup/             # Turnkey Event Setup Wizard (Gujarati)
 │   │   └── volunteer/         # Volunteer Search & Quick Register
 │   ├── services/              # Business Domain Logic & Firestore Queries
 │   ├── tests/                 # Unit & Integration Tests (Vitest)
-│   ├── types/                 # TypeScript Domain Interfaces & Enums
-│   ├── App.tsx                # Client Routing Configuration
-│   ├── main.tsx               # Application Entry Point
-│   └── index.css              # Global Design System & Utility Styles
+│   └── types/                 # TypeScript Domain Interfaces & Enums
+├── SETUP_GUIDE.md             # Complete Step-by-Step Guide in Gujarati
+├── LICENSE                    # MIT License
 ├── firebase.json              # Firebase Hosting & Firestore Config
-├── firestore.indexes.json     # Firestore Composite Indexes
-├── firestore.rules            # Firestore Security & Permission Rules
 ├── package.json               # Project Dependencies & Scripts
-├── tailwind.config.js         # Tailwind Design Tokens
 └── vite.config.ts             # Vite Bundler Setup & Path Aliases
 ```
 
@@ -229,90 +173,51 @@ diwali/
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-- **Node.js**: `v20.x` or higher recommended
-- **npm**: `v10.x` or higher
-- **Firebase CLI**: `npm install -g firebase-tools`
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/devpoojan/diwali-utsav.git
-   cd diwali-utsav
-   ```
-
-2. Install project dependencies:
-   ```bash
-   npm install
-   ```
-
-### Environment Configuration
-
-Create a `.env` or `.env.local` file in the root directory with your Firebase project credentials:
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
-### Development Server
-
-Start the Vite development server:
+### 1. Installation
 ```bash
+git clone https://github.com/devpoojan/diwali-utsav.git
+cd diwali-utsav
+npm install
 npm run dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### Testing
+### 2. Configure Your Event
+Open your browser at [http://localhost:5173/setup](http://localhost:5173/setup) to run the visual Setup Wizard:
+- Connect your free Google Firebase project.
+- Upload your mandal logo and event title.
+- Configure your celebration centers, dates, and code prefixes.
 
-Run the Vitest test suite:
+### 3. Testing
 ```bash
-npm test -- --run
+npm test
 ```
 
-### Production Build
-
-Create an optimized production bundle:
+### 4. Production Build
 ```bash
 npm run build
 ```
-Built assets are output to the `dist/` directory.
 
 ---
 
 ## ☁️ Firebase Deployment
 
-### Deploy Hosting Only
+Deploy for free to Firebase Hosting:
+
 ```bash
-npm run build
-npx firebase deploy --only hosting
+# 1. Login to Firebase CLI
+npx firebase login
+
+# 2. Connect your Firebase project
+npx firebase use --add
+
+# 3. Build & Deploy
+npm run deploy
 ```
-
-### Deploy Firestore Security Rules & Indexes
-```bash
-npx firebase deploy --only firestore:rules,firestore:indexes
-```
-
----
-
-## 📅 Event Schedule
-
-| Center | Date | Day | Time | Venue |
-| :--- | :--- | :--- | :--- | :--- |
-| **ચાંદલોડિયા (Chandlodiya)** | 31/10/2026 | Saturday (શનિવાર) | 5:00 PM – 8:00 PM | BAPS શ્રી સ્વામિનારાયણ સંસ્કારધામ, ચાંદલોડિયા |
-| **વાડજ (Vadaj)** | 01/11/2026 | Sunday (રવિવાર) | 5:00 PM – 8:00 PM | BAPS શ્રી સ્વામિનારાયણ સંસ્કારધામ, વાડજ |
 
 ---
 
 ## 📜 License & Credits
 
-- **Organization:** BAPS Swaminarayan Sanstha
-- **Department:** BAPS Bal Pravrutti, Ahmedabad-15 & Ahmedabad-19
-- **Project:** Anandotsav 2026
+- **License:** [MIT License](./LICENSE)
+- **Organization:** BAPS Swaminarayan Sanstha & Contributors
 - **Lead Developer:** Poojan Chauhan ([@devpoojan](https://github.com/devpoojan))
