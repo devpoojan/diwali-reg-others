@@ -175,8 +175,8 @@ diwali/
 
 ### 1. Installation
 ```bash
-git clone https://github.com/devpoojan/diwali-utsav.git
-cd diwali-utsav
+git clone https://github.com/devpoojan/diwali-reg-others.git
+cd diwali-reg-others
 npm install
 npm run dev
 ```
